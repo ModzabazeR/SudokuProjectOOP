@@ -23,7 +23,7 @@ public class App {
 	}
 
 	private void addFont() {
-		String fontPath = "C:/Users/modda/OneDrive/Documents/KMITL/ปี 1/เทอม 2/OOP/Sudoku/packSudoku/pixellet.ttf";
+		String fontPath = "/Users/daisuki0i/Desktop/Object-OrientedProgramming/Sudoku/packSudoku/pixellet.ttf";
 
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -44,7 +44,9 @@ public class App {
 		gameTitle.setForeground(Color.black);
 
 		Font bottonFont = new Font("pixellet", Font.PLAIN, 25);
-		buttonPlay.setFont(bottonFont); buttonScoreboard.setFont(bottonFont); buttonCredit.setFont(bottonFont);
+		buttonPlay.setFont(bottonFont);
+		buttonScoreboard.setFont(bottonFont);
+		buttonCredit.setFont(bottonFont);
 
 		buttonScoreboard.setPreferredSize(new Dimension(300, 40));
 		buttonPlay.setPreferredSize(new Dimension(300, 40));
@@ -56,15 +58,32 @@ public class App {
 		c.insets = new Insets(2, 2, 10, 2);
 		c.ipady = 30;
 		c.gridx = 0;
-		c.gridy = 1; frame.add(gameTitle, c);
-		c.gridy = 2; frame.add(buttonPlay, c);
-		c.gridy = 3; frame.add(buttonScoreboard, c);
-		c.gridy = 4; frame.add(buttonCredit, c);
+		c.gridy = 1;
+		frame.add(gameTitle, c);
+		c.gridy = 2;
+		frame.add(buttonPlay, c);
+		c.gridy = 3;
+		frame.add(buttonScoreboard, c);
+		c.gridy = 4;
+		frame.add(buttonCredit, c);
 
 		Color bottonBgColor = new Color(98, 98, 98);
 		Color bottonFgColor = Color.WHITE;
-		buttonPlay.setBackground(bottonBgColor); buttonPlay.setForeground(bottonFgColor);
-		buttonScoreboard.setBackground(bottonBgColor); buttonScoreboard.setForeground(bottonFgColor);
-		buttonCredit.setBackground(bottonBgColor); buttonCredit.setForeground(bottonFgColor);
+		buttonPlay.setBackground(bottonBgColor);
+		buttonPlay.setForeground(bottonFgColor);
+		buttonScoreboard.setBackground(bottonBgColor);
+		buttonScoreboard.setForeground(bottonFgColor);
+		buttonCredit.setBackground(bottonBgColor);
+		buttonCredit.setForeground(bottonFgColor);
+
+		buttonPlay.setOpaque(true);
+		buttonPlay.setBorderPainted(false);
+
+		buttonScoreboard.setOpaque(true);
+		buttonScoreboard.setBorderPainted(false);
+
+		buttonCredit.setOpaque(true);
+		buttonCredit.setBorderPainted(false);
+
 	}
 }
