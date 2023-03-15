@@ -2,6 +2,7 @@ package Sudoku.packSudoku;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ public class App extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addFont();
 		initComponents();
+		setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 
@@ -82,5 +84,28 @@ public class App extends JFrame{
 		buttonCredit.setOpaque(true);
 		buttonCredit.setBorderPainted(false);
 
+
+		AllButtonListener b = new AllButtonListener();
+		buttonPlay.addActionListener(b);
+		buttonScoreboard.addActionListener(b);
+		buttonCredit.addActionListener(b);
+	}
+
+	private class AllButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton source = (JButton)e.getSource();
+			if (source == buttonPlay) {
+				newGame();
+			} else if (source == buttonScoreboard) {
+				System.out.println("Scoreboard");
+			} else if (source == buttonCredit) {
+				System.out.println("Credit");
+			}
+		}
+	}
+
+	private void newGame() {
+		new Game(getWidth(), getHeight(), getLocation());
 	}
 }
