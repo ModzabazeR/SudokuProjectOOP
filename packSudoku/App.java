@@ -51,11 +51,10 @@ public class App extends JFrame{
 		buttonPlay.setPreferredSize(new Dimension(300, 40));
 		buttonCredit.setPreferredSize(new Dimension(300, 40));
 
-		// จัดการ Layout
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
-		// วางตำแหน่ง
+		
 		c.insets = new Insets(2, 2, 10, 2);
 		c.ipady = 30;
 		c.gridx = 0;
@@ -64,7 +63,7 @@ public class App extends JFrame{
 		c.gridy = 3; this.add(buttonScoreboard, c);
 		c.gridy = 4; this.add(buttonCredit, c);
 
-		// ลงสี
+		
 		Color bottonBgColor = new Color(98, 98, 98);
 		Color bottonFgColor = Color.WHITE;
 		buttonPlay.setBackground(bottonBgColor);
