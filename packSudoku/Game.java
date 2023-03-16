@@ -1,6 +1,7 @@
 package Sudoku.packSudoku;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import Sudoku.packSudoku.components.*;
 import java.awt.*;
@@ -11,15 +12,9 @@ public class Game extends JFrame implements PuzzleTemplate {
 	private Random rand = new Random();
 	private int[][] puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
 	GameBoard gameBoard;
-	private JButton buttonReset;
-	private JButton buttonNextGame;
-	private JButton buttonMenu;
-	private JButton buttonResolve; 
-	private ImageIcon iconReset;
-	private ImageIcon iconNextGame;
-	private ImageIcon iconHome;
+	AllButtonPanel allButtons;
 
-	public class GameBoard extends JPanel {
+	class GameBoard extends JPanel {
 		private JButton[][] buttons = new JButton[3][3];
 
 		public GameBoard() {
@@ -88,108 +83,131 @@ public class Game extends JFrame implements PuzzleTemplate {
 		}
 	}
 
-	public Game(int width, int height, Point position) {
+	class AllButtonPanel extends JPanel implements ActionListener{
+		private JButton buttonReset;
+		private JButton buttonNextGame;
+		private JButton buttonMenu;
+		private JButton buttonResolve; 
+		private ImageIcon iconReset;
+		private ImageIcon iconNextGame;
+		private ImageIcon iconHome;
+		private ImageIcon iconResolve;
+		private Game root;
+
+		public AllButtonPanel(Game root) {
+			this.root = root;
+			setLayout(new GridLayout(1, 4));
+			initComponents();
+		}
+
+		private void initComponents() {
+			try {
+				iconReset = new ImageIcon("Sudoku/packSudoku/img/undo.png");
+				iconNextGame = new ImageIcon("Sudoku/packSudoku/img/next.png");
+				iconHome = new ImageIcon("Sudoku/packSudoku/img/home.png");
+				iconResolve = new ImageIcon("Sudoku/packSudoku/img/view.png");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	
+			buttonReset = new JButton(iconReset);
+			buttonNextGame = new JButton(iconNextGame);
+			buttonMenu = new JButton(iconHome);
+			buttonResolve = new JButton(iconResolve);
+			
+			Font bottonFont = new Font("pixellet", Font.PLAIN, 25);
+			buttonReset.setFont(bottonFont);
+			buttonNextGame.setFont(bottonFont);
+			buttonMenu.setFont(bottonFont);
+			buttonResolve.setFont(bottonFont);
+	
+			Color bottonBgColor = new Color(217, 217, 217);
+			Color bottonFgColor = Color.WHITE;
+			buttonReset.setBackground(bottonBgColor);
+			buttonReset.setForeground(bottonFgColor);
+			buttonNextGame.setBackground(bottonBgColor);
+			buttonNextGame.setForeground(bottonFgColor);
+			buttonMenu.setBackground(bottonBgColor);
+			buttonMenu.setForeground(bottonFgColor);
+			buttonResolve.setBackground(bottonBgColor);
+			buttonResolve.setForeground(bottonFgColor);
+	
+			buttonReset.setPreferredSize(new Dimension(50, 50));
+			buttonNextGame.setPreferredSize(new Dimension(50, 50));
+			buttonMenu.setPreferredSize(new Dimension(50, 50));
+			buttonResolve.setPreferredSize(new Dimension(150, 50));
+	
+			this.add(buttonMenu);
+			this.add(buttonNextGame);
+			this.add(buttonReset);
+			this.add(buttonResolve);
+	
+			buttonReset.setOpaque(false);
+			buttonReset.setBorderPainted(false);
+			buttonReset.setContentAreaFilled(false);
+	
+			buttonNextGame.setOpaque(false);
+			buttonNextGame.setBorderPainted(false);
+			buttonNextGame.setContentAreaFilled(false);
+	
+			buttonMenu.setOpaque(false);
+			buttonMenu.setBorderPainted(false);
+			buttonMenu.setContentAreaFilled(false);
+	
+			buttonResolve.setOpaque(false);
+			buttonResolve.setBorderPainted(false);
+			buttonResolve.setContentAreaFilled(false);
+	
+			buttonReset.addActionListener(this);
+			buttonNextGame.addActionListener(this);
+			buttonMenu.addActionListener(this);
+			buttonResolve.addActionListener(this);
+		}
+
+			public void actionPerformed(ActionEvent e) {
+				JButton source = (JButton)e.getSource();
+				if (source == buttonReset) {
+					gameBoard.removeAll();
+					gameBoard.buildBoard();
+					gameBoard.revalidate();
+				} else if (source == buttonNextGame) {
+					int[][] oldPuzzle = puzzle; 
+					puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
+					while (puzzle == oldPuzzle){
+						puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
+					}
+					gameBoard.removeAll();
+					gameBoard.buildBoard();
+					gameBoard.revalidate();
+				} else if (source == buttonMenu) {
+					dispose();
+				} else if (source == buttonResolve) {
+					if (gameBoard.resolve()) {
+						gameBoard.changeBoardColorCorrect();
+					} else {
+						JOptionPane.showMessageDialog(root, "The answer is incorrect!", "Incorrect", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+	}
+	public Game(Point position) {
 		setTitle("Game");
 		setBackground(new Color(217, 217, 217));
-		setSize(width, height);
+		setSize(600, 600);
 		setLocation(position);
+		setResizable(false);
 		setLayout(new FlowLayout());
 		initComponents();
 		setVisible(true);
-
 	}
 
 	private void initComponents() {
 		gameBoard = new GameBoard();
 		gameBoard.setPreferredSize(new Dimension(400,400));
+		gameBoard.setBorder(new EmptyBorder(50, 30, 20, 30));
+		allButtons = new AllButtonPanel(this);
+		allButtons.setPreferredSize(new Dimension(350, 80));
 		getContentPane().add(gameBoard);
-
-		try {
-			iconReset = new ImageIcon("Sudoku/packSudoku/img/undo.png");
-			iconNextGame = new ImageIcon("Sudoku/packSudoku/img/next.png");
-			iconHome = new ImageIcon("Sudoku/packSudoku/img/home.png");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		buttonReset = new JButton(iconReset);
-		buttonNextGame = new JButton(iconNextGame);
-		buttonMenu = new JButton(iconHome);
-		buttonResolve = new JButton("Resolve");
-		
-
-		Font bottonFont = new Font("pixellet", Font.PLAIN, 25);
-		buttonReset.setFont(bottonFont);
-		buttonNextGame.setFont(bottonFont);
-		buttonMenu.setFont(bottonFont);
-		buttonResolve.setFont(bottonFont);
-
-		Color bottonBgColor = new Color(217, 217, 217);
-		Color bottonFgColor = Color.WHITE;
-		buttonReset.setBackground(bottonBgColor);
-		buttonReset.setForeground(bottonFgColor);
-		buttonNextGame.setBackground(bottonBgColor);
-		buttonNextGame.setForeground(bottonFgColor);
-		buttonMenu.setBackground(bottonBgColor);
-		buttonMenu.setForeground(bottonFgColor);
-		buttonResolve.setBackground(new Color(98, 98, 98));
-		buttonResolve.setForeground(bottonFgColor);
-
-		buttonReset.setPreferredSize(new Dimension(50, 50));
-		buttonNextGame.setPreferredSize(new Dimension(50, 50));
-		buttonMenu.setPreferredSize(new Dimension(50, 50));
-		buttonResolve.setPreferredSize(new Dimension(150, 50));
-
-		this.add(buttonMenu);
-		this.add(buttonNextGame);
-		this.add(buttonReset);
-		this.add(buttonResolve);
-
-		buttonReset.setOpaque(false);
-		buttonReset.setBorderPainted(false);
-		buttonReset.setContentAreaFilled(false);
-
-		buttonNextGame.setOpaque(false);
-		buttonNextGame.setBorderPainted(false);
-		buttonNextGame.setContentAreaFilled(false);
-
-		buttonMenu.setOpaque(false);
-		buttonMenu.setBorderPainted(false);
-		buttonMenu.setContentAreaFilled(false);
-
-		buttonResolve.setOpaque(true);
-		buttonResolve.setBorderPainted(false);
-
-		AllButtonListener b = new AllButtonListener();
-		buttonReset.addActionListener(b);
-		buttonNextGame.addActionListener(b);
-		buttonMenu.addActionListener(b);
-		buttonResolve.addActionListener(b);
+		getContentPane().add(allButtons);
 	}
-	private class AllButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			JButton source = (JButton)e.getSource();
-			if (source == buttonReset) {
-				gameBoard.removeAll();
-				gameBoard.buildBoard();
-				gameBoard.revalidate();
-			} else if (source == buttonNextGame) {
-				int[][] oldPuzzle = puzzle; 
-				puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
-				while (puzzle == oldPuzzle){
-					puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
-				}
-				gameBoard.removeAll();
-				gameBoard.buildBoard();
-				gameBoard.revalidate();
-			} else if (source == buttonMenu) {
-				dispose();
-			} else if (source == buttonResolve) {
-				if (gameBoard.resolve()) {
-					gameBoard.changeBoardColorCorrect();
-				}
-			}
-		}
-	}
-
 }
