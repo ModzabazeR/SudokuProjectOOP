@@ -96,16 +96,12 @@ public class App extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			JButton source = (JButton)e.getSource();
 			if (source == buttonPlay) {
-				newGame();
+				new Game(getWidth(), getHeight(), getLocation());
 			} else if (source == buttonScoreboard) {
 				System.out.println("Scoreboard");
 			} else if (source == buttonCredit) {
 				System.out.println("Credit");
 			}
 		}
-	}
-
-	private void newGame() {
-		new Game(getWidth(), getHeight(), getLocation());
 	}
 }

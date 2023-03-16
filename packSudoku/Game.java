@@ -11,6 +11,9 @@ import java.util.Random;
 public class Game extends JFrame implements PuzzleTemplate {
 	private Random rand = new Random();
 	private int[][] puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
+	private JButton buttonReset;
+	private JButton buttonNextGame;
+	private JButton buttonMenu;
 
 	public class JPanelGrid extends JPanel {
 		private JButton[][] buttons = new JButton[3][3];
@@ -18,6 +21,7 @@ public class Game extends JFrame implements PuzzleTemplate {
 		public JPanelGrid() {
 			setLayout(new GridLayout(3, 3, 3, 3));
 			buildBoard();
+
 		}
 
 		private void buildBoard() {
@@ -30,6 +34,10 @@ public class Game extends JFrame implements PuzzleTemplate {
 					buttons[i][j].setForeground(Color.WHITE);
 					buttons[i][j].setFont(new Font("pixellet", Font.PLAIN, 25));
 					buttons[i][j].setPreferredSize(new Dimension(80, 80));
+
+					buttons[i][j].setOpaque(true);
+					buttons[i][j].setBorderPainted(false);
+
 					if (puzzle[i][j] != 0) buttons[i][j].setEnabled(false);
 
 					BoardListener b = new BoardListener();
@@ -59,11 +67,50 @@ public class Game extends JFrame implements PuzzleTemplate {
 		setLayout(new FlowLayout());
 		initComponents();
 		setVisible(true);
+
 	}
 
 	private void initComponents() {
 		JPanelGrid mainPanel = new JPanelGrid();
 		mainPanel.setPreferredSize(new Dimension(400,400));
 		getContentPane().add(mainPanel);
+
+
+		buttonReset = new JButton("Reset");
+		buttonNextGame = new JButton("Next Game");
+		buttonMenu = new JButton("Menu");
+
+		Font bottonFont = new Font("pixellet", Font.PLAIN, 25);
+		buttonReset.setFont(bottonFont);
+		buttonNextGame.setFont(bottonFont);
+		buttonMenu.setFont(bottonFont);
+
+		Color bottonBgColor = new Color(98, 98, 98);
+		Color bottonFgColor = Color.WHITE;
+		buttonReset.setBackground(bottonBgColor);
+		buttonReset.setForeground(bottonFgColor);
+		buttonNextGame.setBackground(bottonBgColor);
+		buttonNextGame.setForeground(bottonFgColor);
+		buttonMenu.setBackground(bottonBgColor);
+		buttonMenu.setForeground(bottonFgColor);
+
+		buttonReset.setPreferredSize(new Dimension(50, 50));
+		buttonNextGame.setPreferredSize(new Dimension(50, 50));
+		buttonMenu.setPreferredSize(new Dimension(50, 50));
+
+		this.add(buttonReset);
+		this.add(buttonNextGame);
+		this.add(buttonMenu);
+
+		buttonReset.setOpaque(true);
+		buttonReset.setBorderPainted(false);
+
+		buttonNextGame.setOpaque(true);
+		buttonNextGame.setBorderPainted(false);
+
+		buttonMenu.setOpaque(true);
+		buttonMenu.setBorderPainted(false);
 	}
+	
+
 }
