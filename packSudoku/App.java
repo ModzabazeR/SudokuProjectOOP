@@ -11,6 +11,7 @@ public class App extends JFrame implements ActionListener {
 	private JButton buttonPlay;
 	private JButton buttonTutorial;
 	private JButton buttonCredit;
+	private ImageIcon icon = new ImageIcon("Sudoku/packSudoku/img/icon.png");
 
 	public App() {
 		this.setTitle("Sudoku");
@@ -22,6 +23,7 @@ public class App extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(false);
+		this.setIconImage(icon.getImage());
 	}
 
 	private void addFont() {
