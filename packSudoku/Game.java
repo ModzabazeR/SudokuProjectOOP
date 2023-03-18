@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import Sudoku.packSudoku.components.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Game extends JFrame implements PuzzleTemplate {
@@ -13,6 +14,12 @@ public class Game extends JFrame implements PuzzleTemplate {
 	private int[][] puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
 	GameBoard gameBoard;
 	AllButtonPanel allButtons;
+
+	JLabel counterLabel;
+	Timer timer;
+    int second, minute;
+    String ddSecond, ddMinute;
+    DecimalFormat dFormat = new DecimalFormat("00");
 
 	class GameBoard extends JPanel {
 		private JButton[][] buttons = new JButton[3][3];
@@ -31,7 +38,7 @@ public class Game extends JFrame implements PuzzleTemplate {
 
 					buttons[i][j].setBackground(new Color(98, 98, 98));
 					buttons[i][j].setForeground(Color.WHITE);
-					buttons[i][j].setFont(new Font("pixellet", Font.PLAIN, 25));
+					buttons[i][j].setFont(new Font("2005_iannnnnCPU", Font.PLAIN, 45));
 					buttons[i][j].setPreferredSize(new Dimension(80, 80));
 
 					buttons[i][j].setOpaque(true);
@@ -115,7 +122,7 @@ public class Game extends JFrame implements PuzzleTemplate {
 			buttonMenu = new JButton(iconHome);
 			buttonResolve = new JButton(iconResolve);
 			
-			Font bottonFont = new Font("pixellet", Font.PLAIN, 25);
+			Font bottonFont = new Font("2005_iannnnnCPU", Font.PLAIN, 45);
 			buttonReset.setFont(bottonFont);
 			buttonNextGame.setFont(bottonFont);
 			buttonMenu.setFont(bottonFont);
@@ -176,6 +183,10 @@ public class Game extends JFrame implements PuzzleTemplate {
 					while (puzzle == oldPuzzle){
 						puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
 					}
+					second = -1;
+					minute = 0;
+					timer.start();
+					buttonReset.setEnabled(true);
 					gameBoard.removeAll();
 					gameBoard.buildBoard();
 					gameBoard.revalidate();
@@ -184,8 +195,12 @@ public class Game extends JFrame implements PuzzleTemplate {
 				} else if (source == buttonResolve) {
 					if (gameBoard.resolve()) {
 						gameBoard.changeBoardColorCorrect();
+						timer.stop();
+						buttonReset.setEnabled(false);
 					} else {
+						timer.stop();
 						JOptionPane.showMessageDialog(root, "The answer is incorrect!", "Incorrect", JOptionPane.ERROR_MESSAGE);
+						timer.start();
 					}
 				}
 			}
@@ -204,10 +219,41 @@ public class Game extends JFrame implements PuzzleTemplate {
 	private void initComponents() {
 		gameBoard = new GameBoard();
 		gameBoard.setPreferredSize(new Dimension(400,400));
-		gameBoard.setBorder(new EmptyBorder(50, 30, 20, 30));
+		gameBoard.setBorder(new EmptyBorder(30, 30, 10, 30));
 		allButtons = new AllButtonPanel(this);
-		allButtons.setPreferredSize(new Dimension(350, 80));
+		allButtons.setPreferredSize(new Dimension(350, 70));
 		getContentPane().add(gameBoard);
 		getContentPane().add(allButtons);
+
+		counterLabel = new JLabel("00:00");
+        counterLabel.setPreferredSize(new Dimension(350, 50));
+        counterLabel.setFont(new Font("2005_iannnnnCPU", Font.PLAIN, 50));
+		counterLabel.setHorizontalAlignment(JLabel.CENTER);
+		add(counterLabel);
+		countTime();
+        timer.start();
 	}
+
+	public void countTime() {
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                second++;
+
+                ddSecond = dFormat.format(second);
+                ddMinute = dFormat.format(minute);
+
+                counterLabel.setText(ddMinute + ":" + ddSecond);
+
+                if (second == 60) {
+                    second = 0;
+                    minute++;
+
+                    ddSecond = dFormat.format(second);
+                    ddMinute = dFormat.format(minute);
+                    counterLabel.setText(ddMinute + ":" + ddSecond);
+                }
+            }
+        });
+    }
 }

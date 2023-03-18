@@ -25,7 +25,7 @@ public class App extends JFrame implements ActionListener {
 	}
 
 	private void addFont() {
-		String fontPath = "/Users/daisuki0i/Desktop/Object-OrientedProgramming/Sudoku/packSudoku/pixellet.ttf";
+		String fontPath = "Sudoku/packSudoku/2005_iannnnnCPU.ttf";
 
 		try {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -41,11 +41,11 @@ public class App extends JFrame implements ActionListener {
 		buttonTutorial = new JButton("Tutorial");
 		buttonCredit = new JButton("Credit");
 
-		Font titleFont = new Font("pixellet", Font.PLAIN, 40);
+		Font titleFont = new Font("2005_iannnnnCPU", Font.PLAIN, 60);
 		gameTitle.setFont(titleFont);
 		gameTitle.setForeground(Color.black);
 
-		Font bottonFont = new Font("pixellet", Font.PLAIN, 25);
+		Font bottonFont = new Font("2005_iannnnnCPU", Font.PLAIN, 45);
 		buttonPlay.setFont(bottonFont);
 		buttonTutorial.setFont(bottonFont);
 		buttonCredit.setFont(bottonFont);
