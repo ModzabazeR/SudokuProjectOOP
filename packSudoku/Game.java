@@ -41,6 +41,7 @@ public class Game extends JFrame implements PuzzleTemplate {
 					buttons[i][j].setFont(new Font("2005_iannnnnCPU", Font.PLAIN, 45));
 					buttons[i][j].setPreferredSize(new Dimension(80, 80));
 
+					buttons[i][j].setFocusPainted(false);
 					buttons[i][j].setOpaque(true);
 					buttons[i][j].setBorderPainted(false);
 
@@ -127,6 +128,11 @@ public class Game extends JFrame implements PuzzleTemplate {
 			buttonNextGame.setFont(bottonFont);
 			buttonMenu.setFont(bottonFont);
 			buttonResolve.setFont(bottonFont);
+
+			buttonReset.setFocusPainted(false);
+			buttonNextGame.setFocusPainted(false);
+			buttonMenu.setFocusPainted(false);
+			buttonResolve.setFocusPainted(false);
 	
 			Color bottonBgColor = new Color(217, 217, 217);
 			Color bottonFgColor = Color.WHITE;

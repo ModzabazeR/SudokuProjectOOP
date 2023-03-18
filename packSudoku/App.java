@@ -54,6 +54,10 @@ public class App extends JFrame implements ActionListener {
 		buttonTutorial.setFont(bottonFont);
 		buttonCredit.setFont(bottonFont);
 
+		buttonPlay.setFocusPainted(false);
+		buttonTutorial.setFocusPainted(false);
+		buttonCredit.setFocusPainted(false);
+
 		buttonTutorial.setPreferredSize(new Dimension(300, 40));
 		buttonPlay.setPreferredSize(new Dimension(300, 40));
 		buttonCredit.setPreferredSize(new Dimension(300, 40));
