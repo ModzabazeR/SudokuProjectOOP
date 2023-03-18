@@ -11,7 +11,7 @@ public class App extends JFrame implements ActionListener {
 	private JButton buttonPlay;
 	private JButton buttonTutorial;
 	private JButton buttonCredit;
-	private ImageIcon icon = new ImageIcon("Sudoku/packSudoku/img/icon.png");
+	private ImageIcon icon;
 
 	public App() {
 		this.setTitle("Sudoku");
@@ -40,6 +40,12 @@ public class App extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
+		try {
+			icon = new ImageIcon("Sudoku/packSudoku/img/icon.png");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		gameTitle = new JLabel("Sudoku Game");
 		buttonPlay = new JButton("Play");
 		buttonTutorial = new JButton("Tutorial");
@@ -107,7 +113,7 @@ public class App extends JFrame implements ActionListener {
 		} else if (source == buttonTutorial) {
 			JOptionPane.showMessageDialog(this, "Tutorial");
 		} else if (source == buttonCredit) {
-			JOptionPane.showMessageDialog(this, "65050581 พชร จิระภคโชติ\n65050777 วรชิสา บุญเลิศ\n65050792 วรวิชย์ รอดท่าหอย");
+			JOptionPane.showMessageDialog(this, "65050581 พชร จิระภคโชติ\n65050777 วรชิสา บุญเลิศ\n65050792 วรวิชย์ รอดท่าหอย", "สมาชิกกลุ่ม", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
