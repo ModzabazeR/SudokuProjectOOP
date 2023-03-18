@@ -20,6 +20,8 @@ public class App extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addFont();
 		initComponents();
+		UIManager.put("OptionPane.messageFont", new Font("2005_iannnnnCPU", Font.PLAIN, 28));
+		UIManager.put("OptionPane.buttonFont", new Font("2005_iannnnnCPU", Font.PLAIN, 26));
 		setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(false);
@@ -101,7 +103,7 @@ public class App extends JFrame implements ActionListener {
 		} else if (source == buttonTutorial) {
 			JOptionPane.showMessageDialog(this, "Tutorial");
 		} else if (source == buttonCredit) {
-			JOptionPane.showMessageDialog(this, "Credit");
+			JOptionPane.showMessageDialog(this, "65050581 พชร จิระภคโชติ\n65050777 วรชิสา บุญเลิศ\n65050792 วรวิชย์ รอดท่าหอย");
 		}
 	}
 
