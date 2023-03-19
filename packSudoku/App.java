@@ -116,25 +116,27 @@ public class App extends JFrame implements ActionListener {
 			new Game(getLocation());
 		} else if (source == buttonTutorial) {
 			JOptionPane.showMessageDialog(this,
-							"- กดปุ่มในตารางเพื่อเปลี่ยนเลข 1-3\n" + 
+					"- กดปุ่มในตารางเพื่อเปลี่ยนเลข 1-3\n" +
 							"- กดปุ่มตาเพื่อตรวจคำตอบ\n" +
 							"- กดปุ่มรีเซ็ทเพื่อเคลียร์กระดาน\n" +
 							"- กดปุ่มลูกศรเพื่อเล่นเกมใหม่ต่อ\n" +
-							"- กดปุ่มบ้านเพื่อกลับไปหน้าแรก");
+							"- กดปุ่มบ้านเพื่อกลับไปหน้าแรก",
+					"วิธีเล่น",
+					JOptionPane.INFORMATION_MESSAGE);
 		} else if (source == buttonCredit) {
 			JOptionPane.showMessageDialog(this,
-							"65050581 พชร จิระภคโชติ\n" + 
-							"65050777 วรชิสา บุญเลิศ\n" + 
-							"65050792 วรวิชย์ รอดท่าหอย", 
-									"สมาชิกกลุ่ม",
-									JOptionPane.PLAIN_MESSAGE);
+					"65050581 พชร จิระภคโชติ\n" +
+							"65050777 วรชิสา บุญเลิศ\n" +
+							"65050792 วรวิชย์ รอดท่าหอย",
+					"สมาชิกกลุ่ม",
+					JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
 	private void sound() {
 		try {
 			Random rand = new Random();
-			String[] music = {"start_menu.wav", "once_upon_a_time.wav", "home.wav", "your_best_friend.wav"};
+			String[] music = { "start_menu.wav", "once_upon_a_time.wav", "home.wav", "your_best_friend.wav" };
 			File file = new File("Sudoku/packSudoku/sound/" + music[rand.nextInt(music.length)]);
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
 			Clip clip = AudioSystem.getClip();
