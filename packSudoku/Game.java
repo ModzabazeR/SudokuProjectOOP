@@ -22,7 +22,7 @@ public class Game extends JFrame implements PuzzleTemplate {
     String ddSecond, ddMinute;
     DecimalFormat dFormat = new DecimalFormat("00");
 
-	class GameBoard extends JPanel {
+	class GameBoard extends JPanel implements ActionListener{
 		private JButton[][] buttons = new JButton[3][3];
 
 		public GameBoard() {
@@ -47,8 +47,7 @@ public class Game extends JFrame implements PuzzleTemplate {
 
 					if (puzzle[i][j] != 0) buttons[i][j].setEnabled(false);
 
-					BoardListener b = new BoardListener();
-					buttons[i][j].addActionListener(b);
+					buttons[i][j].addActionListener(this);
 					add(buttons[i][j]);
 				}
 			}
@@ -79,7 +78,6 @@ public class Game extends JFrame implements PuzzleTemplate {
 			 }
 		}
 
-		private class BoardListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton source = (JButton)e.getSource();
@@ -88,7 +86,7 @@ public class Game extends JFrame implements PuzzleTemplate {
 				if (currentNum == 4) currentNum = 1;
 				source.setText("" + currentNum);
 			}
-		}
+
 	}
 
 	class AllButtonPanel extends JPanel implements ActionListener{
@@ -235,8 +233,8 @@ public class Game extends JFrame implements PuzzleTemplate {
 		gameBoard.setBorder(new EmptyBorder(30, 30, 10, 30));
 		allButtons = new AllButtonPanel(this);
 		allButtons.setPreferredSize(new Dimension(350, 70));
-		getContentPane().add(gameBoard);
-		getContentPane().add(allButtons);
+		add(gameBoard);
+		add(allButtons);
 
 		counterLabel = new JLabel("00:00");
         counterLabel.setPreferredSize(new Dimension(350, 50));

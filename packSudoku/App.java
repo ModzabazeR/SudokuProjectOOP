@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import javax.sound.sampled.*; //add sound
-import java.util.Scanner;
+import javax.sound.sampled.*;
+import java.util.Random;
 
 public class App extends JFrame implements ActionListener {
 	private JLabel gameTitle;
@@ -14,7 +14,6 @@ public class App extends JFrame implements ActionListener {
 	private JButton buttonTutorial;
 	private JButton buttonCredit;
 	private ImageIcon icon;
-	Scanner sc = new Scanner(System.in);
 
 	public App() {
 		this.setTitle("Sudoku");
@@ -110,22 +109,33 @@ public class App extends JFrame implements ActionListener {
 		buttonCredit.addActionListener(this);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 		if (source == buttonPlay) {
 			new Game(getLocation());
 		} else if (source == buttonTutorial) {
-			JOptionPane.showMessageDialog(this, "Tutorial");
+			JOptionPane.showMessageDialog(this,
+							"- กดปุ่มในตารางเพื่อเปลี่ยนเลข 1-3\n" + 
+							"- กดปุ่มตาเพื่อตรวจคำตอบ\n" +
+							"- กดปุ่มรีเซ็ทเพื่อเคลียร์กระดาน\n" +
+							"- กดปุ่มลูกศรเพื่อเล่นเกมใหม่ต่อ\n" +
+							"- กดปุ่มบ้านเพื่อกลับไปหน้าแรก");
 		} else if (source == buttonCredit) {
 			JOptionPane.showMessageDialog(this,
-					"65050581 พชร จิระภคโชติ\n65050777 วรชิสา บุญเลิศ\n65050792 วรวิชย์ รอดท่าหอย", "สมาชิกกลุ่ม",
-					JOptionPane.PLAIN_MESSAGE);
+							"65050581 พชร จิระภคโชติ\n" + 
+							"65050777 วรชิสา บุญเลิศ\n" + 
+							"65050792 วรวิชย์ รอดท่าหอย", 
+									"สมาชิกกลุ่ม",
+									JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
 	private void sound() {
 		try {
-			File file = new File("Sudoku/packSudoku/sound/Beggin_.wav");
+			Random rand = new Random();
+			String[] music = {"start_menu.wav", "once_upon_a_time.wav", "home.wav", "your_best_friend.wav"};
+			File file = new File("Sudoku/packSudoku/sound/" + music[rand.nextInt(music.length)]);
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioStream);
@@ -134,9 +144,7 @@ public class App extends JFrame implements ActionListener {
 			FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			volume.setValue(-10);
 
-			clip.start();
-
-			String response = sc.next();
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 
 		} catch (Exception e) {
 			e.printStackTrace();
