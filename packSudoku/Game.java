@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Game extends JFrame implements PuzzleTemplate {
+	private ImageIcon icon;
 	private Random rand = new Random();
 	private int[][] puzzle = PUZZLES[rand.nextInt(PUZZLES.length)];
 	GameBoard gameBoard;
@@ -27,7 +28,6 @@ public class Game extends JFrame implements PuzzleTemplate {
 		public GameBoard() {
 			setLayout(new GridLayout(3, 3, 3, 3));
 			buildBoard();
-
 		}
 
 		private void buildBoard() {
@@ -219,10 +219,17 @@ public class Game extends JFrame implements PuzzleTemplate {
 		setResizable(false);
 		setLayout(new FlowLayout());
 		initComponents();
+		setIconImage(icon.getImage());
 		setVisible(true);
 	}
 
 	private void initComponents() {
+		try {
+			icon = new ImageIcon("Sudoku/packSudoku/img/icon.png");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		gameBoard = new GameBoard();
 		gameBoard.setPreferredSize(new Dimension(400,400));
 		gameBoard.setBorder(new EmptyBorder(30, 30, 10, 30));

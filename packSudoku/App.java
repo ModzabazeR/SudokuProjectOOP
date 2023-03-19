@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import javax.sound.sampled.*;//add sound
+import javax.sound.sampled.*; //add sound
 import java.util.Scanner;
 
 public class App extends JFrame implements ActionListener {
@@ -22,7 +22,7 @@ public class App extends JFrame implements ActionListener {
 		this.setSize(600, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addFont();
-		initComponents();		
+		initComponents();
 		UIManager.put("OptionPane.messageFont", new Font("2005_iannnnnCPU", Font.PLAIN, 28));
 		UIManager.put("OptionPane.buttonFont", new Font("2005_iannnnnCPU", Font.PLAIN, 26));
 		setLocationRelativeTo(null);
@@ -115,24 +115,32 @@ public class App extends JFrame implements ActionListener {
 		if (source == buttonPlay) {
 			new Game(getLocation());
 		} else if (source == buttonTutorial) {
-			JOptionPane.showMessageDialog(this, "Tutorial");			
+			JOptionPane.showMessageDialog(this, "Tutorial");
 		} else if (source == buttonCredit) {
-			JOptionPane.showMessageDialog(this, "65050581 พชร จิระภคโชติ\n65050777 วรชิสา บุญเลิศ\n65050792 วรวิชย์ รอดท่าหอย", "สมาชิกกลุ่ม", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(this,
+					"65050581 พชร จิระภคโชติ\n65050777 วรชิสา บุญเลิศ\n65050792 วรวิชย์ รอดท่าหอย", "สมาชิกกลุ่ม",
+					JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
-	private void sound () {		
+	private void sound() {
 		try {
-		File file = new File("Sudoku/packSudoku/sound/Beggin_.wav");
-		AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-		Clip clip = AudioSystem.getClip();
-		clip.open(audioStream);	
-		clip.start();	
-		String response = sc.next();
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
+			File file = new File("Sudoku/packSudoku/sound/Beggin_.wav");
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+
+			// Volume Control
+			FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			volume.setValue(-10);
+
+			clip.start();
+
+			String response = sc.next();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
